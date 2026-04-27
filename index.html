@@ -348,9 +348,9 @@ function updateSmsPreview(){
 function buildMsg(st,slot,tmpl){
   const date=fmtDLong(slot.date);
   if(tmpl==='custom')return document.getElementById('custom-txt')?.value||'';
-  if(tmpl==='daginn_fyrir')return`Góðan dag ${st.name}! Á morgun, ${date} kl. ${slot.time}, er ökutíminn þinn (${slot.type}). Gleymdu ekki! Við sjáumst.`;
-  if(tmpl==='sama_dag')return`Góðan daginn ${st.name}! Í dag kl. ${slot.time} er ökutíminn þinn (${slot.type}). Vertu tilbúin/n!`;
-  return`Halló ${st.name}! Minnir þig á ökutíma ${date} kl. ${slot.time} (${slot.type}). Sjáumst þá!`;
+  if(tmpl==='daginn_fyrir')return`Góðan dag ${st.name}! Á morgun, ${date} kl. ${slot.time}, er ökutíminn þinn. Gleymdu ekki! Við sjáumst.`;
+  if(tmpl==='sama_dag')return`Góðan daginn ${st.name}! Í dag kl. ${slot.time} er ökutíminn þinn. Vertu tilbúin/n!`;
+  return`Halló ${st.name}! Minnir þig á ökutíma ${date} kl. ${slot.time}. Sjáumst þá!`;
 }
 
 function sendSmsNow(){
@@ -412,7 +412,7 @@ function openAddStudent(){
     <div class="modal-title">Nýr nemandi</div>
     <div class="form-group"><label>Nafn *</label><input id="ns-n" type="text" placeholder="Jón Jónsson" autofocus></div>
     <div class="form-group"><label>Símanúmer <span style="color:var(--green);font-size:11px">(þarf fyrir SMS)</span></label><input id="ns-t" type="tel" placeholder="555-1234"></div>
-    <div class="form-group"><label>Kennitala (valfrjálst)</label><input id="ns-k" type="text" placeholder="000000-0000"></div>
+    <div class="form-group"><label>Netfang (valfrjálst)</label><input id="ns-k" type="email" placeholder="jon@example.is"></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px">
       <button class="btn" onclick="closeModal()">Hætta við</button>
       <button class="btn btn-primary" onclick="saveStudent()">Vista</button>
@@ -423,7 +423,7 @@ function openAddStudent(){
 function saveStudent(){
   const name=document.getElementById('ns-n').value.trim();
   if(!name)return alert('Sláðu inn nafn');
-  db.students.push({id:'s'+Date.now(),name,tel:document.getElementById('ns-t').value.trim(),kt:document.getElementById('ns-k').value.trim()});
+  db.students.push({id:'s'+Date.now(),name,tel:document.getElementById('ns-t').value.trim(),email:document.getElementById('ns-k').value.trim()});
   save();closeModal();renderNemendur();
 }
 
